@@ -1,0 +1,15 @@
+C:\Users\riddick\Desktop\EKOCSS\Test.App\obj\Debug\Test.App.csproj.CoreCompileInputs.cache
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\Test.App.exe.config
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\Test.App.exe
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\Test.App.pdb
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\EkoCcs.Core.dll
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\NHibernate.dll
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\Iesi.Collections.dll
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\EkoCcs.Core.pdb
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\EkoCcs.Core.dll.config
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\NHibernate.xml
+C:\Users\riddick\Desktop\EKOCSS\Test.App\bin\Debug\Iesi.Collections.xml
+C:\Users\riddick\Desktop\EKOCSS\Test.App\obj\Debug\Test.App.csprojResolveAssemblyReference.cache
+C:\Users\riddick\Desktop\EKOCSS\Test.App\obj\Debug\Test.App.csproj.CopyComplete
+C:\Users\riddick\Desktop\EKOCSS\Test.App\obj\Debug\Test.App.exe
+C:\Users\riddick\Desktop\EKOCSS\Test.App\obj\Debug\Test.App.pdb
