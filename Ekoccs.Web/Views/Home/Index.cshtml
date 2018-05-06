@@ -1,0 +1,292 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Content/CustomerJS")
+
+<div ng-controller="EkoccsAngCtrl">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control ng-pristine ng-valid" ng-model="searchKeyword" placeholder="Aramak İstediğiniz Metni buraya giriniz">
+        </div>
+        <div class="col-md-3">
+            <span ng-click="AddCustomer()" class="btn btn-success btn-sm">
+                Yeni Müşteri Ekle
+            </span>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btn-sm" export-to-csv>Export CSV</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="divList">
+                <p><b><i>Müşteri Listesi</i></b></p>
+                <table class="table dataTable no-footer" id="tblCustomer">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Adı Soyadı</th>
+                            <th>Cinsiyeti</th>
+                            <th>Doğum Tarihi</th>
+                            <th>Email</th>
+                            <th>Meslek</th>
+                            <th>Web Site</th>
+                            <th>Mail İstiyor Mu</th>
+                            <th>Şehir</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="customer in Customers  | filter: searchKeyword ">
+                            <td>
+                                {{customer.Id}}
+                            </td>
+                            <td>
+                                {{customer.AdSoyad}}
+                            </td>
+                            <td>
+                                {{customer.Cinsiyet ? 'Erkek' : 'Kadın'}}
+                            </td>
+                            <td>
+                                {{customer.DogumTarihi}}
+                            </td>
+                            <td>
+                                {{customer.Email}}
+                            </td>
+                            <td>
+                                {{customer.Meslek}}
+                            </td>
+                            <td>
+                                {{customer.WebSite}}
+                            </td>
+                            <td>
+                                {{customer.IsMail ? 'Evet' : 'Hayır'}}
+                            </td>
+                            <td>
+                                {{customer.citys.IlAdi}}
+                            </td>
+                            <td>
+                                <span ng-click="getPhoneList(customer.Id)" class="btn btn-info btn-xs" title="Tel No Ekle"><i class="fa fa-phone"></i></span>
+                                <span ng-click="editCustomer(customer)" class="btn btn-primary btn-xs" title="Düzenle"><i class="fa fa-edit">&nbsp;</i></span>
+                                <span ng-click="deleteCustomer(customer)" class="btn btn-danger btn-xs" title="Sil"><i class="fa fa-trash-o">&nbsp;</i></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">{{Action}} Müşteri</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="customerForm" novalidate>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Müşteri Kayıt No:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" placeholder="Kayıt No" class="form-control fc-x-sm" ng-model="customer.Id" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Adı Soyadı:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" placeholder="Adı Soyadı" class="form-control fc-x-sm" ng-model="customer.AdSoyad" name="AdSoyad" required />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.AdSoyad.$error.required">Adı ve Soyadı Girilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Cinsiyet:</label>
+                                    <div class="col-sm-4">
+                                        <label class="chk-control col-sm-6">
+                                            <input type="radio" ng-model="customer.Cinsiyet" name="Cinsiyet" ng-value="1" required> Erkek
+                                        </label>
+                                        <label class="chk-control col-sm-6">
+                                            <input type="radio" ng-model="customer.Cinsiyet" name="Cinsiyet" ng-value="0" required> Kadın
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.Cinsiyet.$error.required">Cinsiyet Seçilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Mesleği:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="Meslek" placeholder="Meslek" class="form-control fc-x-sm" ng-model="customer.Meslek" required />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.Meslek.$error.required">Meslek Girilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Doğum Tarihi:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="DogumTarihi" id="txtDgmTarih" class="form-control fc-x-sm" ng-model="customer.DogumTarihi" required />
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.DogumTarihi.$error.required">Doğum Tarihinin Girilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">E Mail:</label>
+                                    <div class="col-sm-4">
+                                        <input type="email" name="email" placeholder="Email" class="form-control fc-x-sm" ng-model="customer.Email" required />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.email.$dirty && customerForm.email.$invalid">
+                                            <span ng-show="customerForm.email.$error.required">Email Girilmesi Zorunludur.</span>
+                                            <span ng-show="customerForm.email.$error.email">Email Formatı Uygun Değildir</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Web Sitesi:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="Website" placeholder="Web Site" class="form-control fc-x-sm" ng-model="customer.WebSite" ng-pattern="Pattern" required />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.Website.$dirty && customerForm.Website.$invalid">
+                                            <span ng-show="customerForm.Website.$error.required">Web site Girilmesi Zorunludur.</span>
+                                            <span ng-show="customerForm.Website.$error.pattern">Web site Adresi Formatı Uygun Değil</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Mail İstiyor Mu:</label>
+                                    <div class="col-sm-4">
+                                        <label class="chk-control form-control fc-x-sm">
+                                            <input type="checkbox" name="IsMail" ng-model="customer.IsMail"> Evet İstiyor
+                                        </label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="customerForm.IsMail.$error.required">Belirtilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Adresi:</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control fc-x-sm" rows="3" ng-model="customer.Adres"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Şehir:</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control fc-x-sm" ng-model="customer.IlKodu" ng-options="p.Id as p.IlAdi for p in Citys"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Açıklama:</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control fc-x-sm" rows="3" ng-model="customer.Aciklama"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Kapat</button>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="AddUpdateCustomer()"><i class="fa fa-save"></i> &nbsp;Kaydet</button>
+                        </div>
+                    </div><!-- modal-content -->
+                </div><!-- modal-dialog -->
+            </div><!-- modal -->
+
+            <div class="modal fade" id="myphoneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Telefon Numaraları</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="phoneForm">
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Telefon Türü:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="TelType" placeholder="Telefon Türü" class="form-control fc-x-sm" ng-model="newPhone.Type"  required/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="phoneForm.TelType.$error.required">Telefon Numarası Tipi Girilmesi Zorunludur.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Telefon No:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="TelNo" placeholder="Telefon No" class="form-control fc-x-sm" ng-model="newPhone.Number" required ng-pattern="phoneNumbr"/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span style="color:red" ng-show="phoneForm.TelNo.$dirty && customerForm.Website.$invalid">
+                                            <span ng-show="phoneForm.TelNo.$error.required">Telefon Numarası Girilmesi Zorunludur</span>
+                                            <span ng-show="phoneForm.TelNo.$error.pattern">Telefon Numarası Formatı Uygun Değil | [+91-036-78658 || 91-036-78658]</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">&nbsp;</label>
+                                    <div class="col-sm-9">
+                                        <span ng-click="InsertPhone(newPhone)" class="btn btn-danger btn-xs" title="Kaydet"><i class="fa fa-save">&nbsp; Numara Kaydet</i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table dataTable no-footer" id="tblPhones">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Telefon Türü</th>
+                                                        <th>Telefon No</th>
+                                                        <th>İşlemler</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="customerPhone in customerPhones">
+                                                        <td>
+                                                            {{customerPhone.Id}}
+                                                        </td>
+                                                        <td>
+                                                            {{customerPhone.Type}}
+                                                        </td>
+                                                        <td>
+                                                            {{customerPhone.Number}}
+                                                        </td>
+                                                        <td>
+                                                            <span ng-click="deletephone(customerPhone.Id)" class="btn btn-danger btn-xs" title="Sil"><i class="fa fa-trash-o">&nbsp;</i></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Kapat</button>
+                        </div>
+                    </div><!-- modal-content -->
+                </div><!-- modal-dialog -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#txtDgmTarih').datetimepicker({
+        dayOfWeekStart: 1,
+        yearStart: 1900,
+        lang: 'tr',
+        mask: true,
+        timepicker: false,
+        format: 'd.m.Y',
+    });
+</script>

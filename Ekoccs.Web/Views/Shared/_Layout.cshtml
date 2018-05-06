@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="EkoccsApp" name="CustomerForm">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deneme</title>
+    @Styles.Render("~/Content/Css")
+    @Scripts.Render("~/Content/JS")
+    @Scripts.Render("~/Content/angularJS")
+
+    <!--[if lt IE 9]>
+          <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+          <![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <![endif]-->
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <div id="preloader">
+        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+
+    <section>
+
+        <div class="leftpanel">
+            <div class="logopanel">
+                <label>[LOGO]</label>
+            </div><!-- logopanel -->
+            <div class="leftpanelinner">
+                <h5 class="sidebartitle">Ana Menü</h5>
+                <ul class="nav nav-pills nav-stacked nav-bracket">
+                    <li><a href="/Home/Index"><i class="fa fa-home"></i> <span>Ana Sayfa</span></a></li>
+                </ul>
+            </div><!-- leftpanelinner -->
+        </div><!-- leftpanel -->
+        <div class="mainpanel">
+            <div class="headerbar">
+                <a class="menutoggle"><i class="fa fa-bars"></i></a>
+
+                <div class="header-right">
+                    <ul class="headermenu">
+                        <li>
+                            <div class="btn-group">
+                                <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    <span class="badge">1</span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-head pull-right">
+                                    <h5 class="title">You Have 1 New Message</h5>
+                                    <ul class="dropdown-list gen-list">
+                                        <li class="new">
+                                            <a href="#">
+                                                <span class="thumb"><img src="~/Content/images/photos/user1.png" alt="" /></span>
+                                                <span class="desc">
+                                                    <span class="name">Ali KARA <span class="badge badge-success">Yeni</span></span>
+                                                    <span class="msg">Yeni Proje iyi mi hacııı</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="new"><a href="#">Tüm Mesajları Oku</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <img src="~/Content/images/photos/loggeduser.png" alt="" />Ali KARA
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                    <li><a href="profile.html"><i class="glyphicon glyphicon-user"></i>Profilim</a></li>
+                                    <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Hesap Ayarları</a></li>
+                                    <li><a href="<?php echo base_url('Admin/Login/LogOut'); ?>"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div><!-- header-right -->
+
+            </div><!-- headerbar -->
+            <div class="pageheader">
+                <h2><i class="fa fa-home"></i> Deneme Sayfası</h2>
+                <div class="breadcrumb-wrapper">
+                    <span class="label">Burdasınız :</span>
+                    <ol class="breadcrumb">
+                        <li><a href="#">Admin</a></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="contentpanel">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="tile-navigation">
+                            @RenderBody()
+                        </div>
+                    </div><!-- col-sm-12 -->
+                </div><!-- row -->
+
+            </div>
+        </div><!-- mainpanel -->
+    </section>
+
+</body>
+</html>

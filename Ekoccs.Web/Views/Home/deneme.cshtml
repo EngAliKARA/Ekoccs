@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Content/CustomerJS")
+<h2>Index</h2>
+<script>
+    $(document).ready(function () {
+        $("#btnClick").click(function () {
+            $.ajax({
+                url: "http://localhost:49367/http/GetCustomerList",
+                type: "POST",
+                crossDomain: true,
+                dataType: "json",
+                success: function (result) {
+                    //alert(JSON.stringify(result));
+                    console.log(result);
+                    result.forEach(function (object) {
+                        console.log(object.citys);
+                        alert(object.citys.IlAdi);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr + " " + status + " " + error);
+                }
+            });
+        });
+    });
+</script>
+
+
+<button id="btnClick" class="btn btn-primary">Get Service</button>
+Denedik bakalım
+

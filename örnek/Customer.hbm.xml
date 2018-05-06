@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="EkoCcs.Core" namespace="EkoCcs.Core.Models">
+  <class name="Customer" table="Customer" dynamic-update="true" >
+    <cache usage="read-write"/>
+    <id name="Id" column="Id" type="int">
+      <generator class="native" />
+    </id>
+    <property name="AdSoyad" column="AdSoyad" type="string" not-null="false" />
+    <property name="Cinsiyet" column="Cinsiyet" type="int" not-null="false" />
+    <property name="Meslek" column="Meslek" type="string" />
+    <property name="DogumTarihi" column="DogumTarihi" type="DateTime" not-null="false"/>
+    <property name="Email" column="Email" type="string" not-null="false"/>
+    <property name="WebSite" column="WebSite" type="string" />
+    <property name="IsMail" column="IsMail" type="bool" not-null="false" />
+    <property name="Adres" column="Adres" type="string" />
+    <property name="IlKodu" column="IlKodu" type="int" not-null="false" />
+    <property name="Aciklama" column="Aciklama" type="string" />
+
+  </class>
+</hibernate-mapping>
